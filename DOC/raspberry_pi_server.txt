@@ -1,0 +1,82 @@
+
+Enable SSH
+sudo /boot/boot_enable_ssh.rc
+
+###
+
+Static IP Address
+
+nano /etc/network/interfaces
+
+iface eth0 inet static
+        address 192.168.1.2
+        netmask 255.255.255.0
+        gateway 192.168.1.1
+
+##
+
+Apache
+First of all we need to create a user account and group for apache to run under.
+
+groupadd www-data
+sudo usermod -a -G www-data www-data
+
+##
+
+PHP
+Now to install php, this will also install PDO with the PostgreSQL drivers
+
+apt-get install php5
+apt-get install php5-pgsql
+service apache2 restart
+##
+
+
+#############
+
+groupadd www-data
+sudo usermod -a -G www-data www-data
+
+#to restart
+#sudo /etc/init.d/apache2 restart
+
+sudo apt-get install apache2
+sudo apt-get install postgresql-common
+sudo apt-get install postgresql postgresql-client postgresql-contrib
+
+sudo apt-get install php5
+sudo apt-get install php5-pgsql
+sudo apt-get install libapache2-mod-php5
+
+
+
+##
+sudo nano /var/www/foo.php
+
+
+
+<html>
+  <body>
+   <?php
+    echo "hello cruel world!";
+   ?>
+  </body>
+</html>
+
+
+#########
+
+
+sudo apt-get install postgresql-9.1-postgis
+
+
+
+##
+
+#psql -d mydatabase -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
+#psql -d mydatabase -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+
+
+
+
+

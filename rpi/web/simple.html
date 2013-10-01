@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>RPI GPS DEMO</title>
+    <style type="text/css">
+      html, body, #basicMap {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+      }
+    </style>
+
+    <script  src="proj4js/lib/proj4js-compressed.js"        type="text/javascript"></script>
+    <script src="open/OpenLayers.js"></script>
+    <script>
+      function init() {
+
+        XNTN_MINX = -180 ;
+        XNTN_MINY = -90 ;
+        XNTN_MAXX = 180  ;
+        XNTN_MAXY = 90  ;
+
+        map = new OpenLayers.Map("basicMap", {allOverlays: false });
+
+        ////////
+
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+        var size = new OpenLayers.Size(21,25);
+        var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+        var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png',size,offset);
+        markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(-122.576856,44.024876),icon));
+
+        ////////
+
+        map.addControl(
+                new OpenLayers.Control.MousePosition({
+                    prefix: '<a target="_blank" ' +
+                        'href="http://spatialreference.org/ref/epsg/4326/">' +
+                        'EPSG:4326</a> coordinates: ',
+                    separator: ' | ',
+                    numDigits: 2,
+                    emptyString: 'Mouse is not over map.'
+                })
+            );
+
+        var ol_wms = new OpenLayers.Layer.WMS( "OpenLayers WMS",
+                    "http://vmap0.tiles.osgeo.org/wms/vmap0?", {layers: 'basic'} );
+
+ 
+
+        map.addLayer(ol_wms);
+        map.setCenter(new OpenLayers.LonLat(-120,45), 5);
+
+
+      }
+    </script>
+
+
+
+
+
+
+  </head>
+  <body onload="init();">
+    <div id="basicMap"></div>
+  </body>
+</html>

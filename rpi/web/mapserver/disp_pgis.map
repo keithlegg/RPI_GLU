@@ -1,0 +1,60 @@
+#URL IS  #http://127.0.0.1/cgi-bin/mapserv.exe?map=/ms4w/apps/disp_pgis.map&mode=map&layer=t1
+
+MAP     
+  IMAGETYPE        PNG24
+  EXTENT        -123.0762 43.9356 -122.8132 44.1451
+  SIZE           512 512
+  IMAGECOLOR     10 10 10
+
+ 
+ SYMBOL
+   NAME "Circle"
+   FILLED true
+   TYPE ellipse
+   POINTS 1 1 END
+ END
+
+  
+  OUTPUTFORMAT
+    NAME 'gml3'
+    MIMETYPE "image/png"
+    DRIVER AGG/PNG
+  END
+
+ LAYER
+      NAME "t1"
+      
+      TEMPLATE 'dummy'
+  
+      CONNECTIONTYPE postgis
+      CONNECTION "user=postgres password=password  dbname=robot host=127.0.0.1  port=5432"
+      DATA "geom from spr_wgs84" # USING unique id
+      #DATA "geom from bot_test" # USING unique id
+      STATUS ON
+      #####
+      PROJECTION
+       "init=epsg:4326"
+      END
+      #####
+  
+      TYPE POLYGON
+      METADATA
+         "gml_featureid" "gid" ## REQUIRED
+         "gml_include_items" "all"
+      END
+      
+      CLASS
+      COLOR 200 255 0
+      SYMBOL "Circle"
+
+      OUTLINECOLOR 0 255 100
+      EXPRESSION ([gid] < 100)
+
+      END
+
+ END
+
+
+
+ 
+END

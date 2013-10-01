@@ -1,0 +1,58 @@
+#STEPS TO CREATE AND CONFIGURE A NEW DATABSE 
+#KEITH LEGG November 20 , 2010 
+
+#be sure to run as user that manages DB (postgres)
+#echo "login as postgres"
+#su postgres
+
+dbname=robot
+uname=robotdb #this can be a new user or an existing one 
+
+##############
+
+
+#if NEWUSER:
+#CREATE A NEW USER
+  ###optional !
+  createuser -D -A -P $uname
+  ##
+
+
+#CREATE A NEW DATABASE
+createdb -O $uname $dbname
+
+#INSTALL POSTGIS INTO NEW DATABASE
+createlang plpgsql $dbname
+psql -d $dbname -f /usr/share/postgresql/9.1/contrib/postgis-2.0/postgis.sql
+psql -d $dbname -f /usr/share/postgresql/9.1/contrib/postgis-2.0/spatial_ref_sys.sql
+psql -d $dbname -f /usr/share/postgresql/9.1/contrib/postgis-2.0/postgis_comments.sql
+
+#SET PRIVILEGES 
+psql -A -t  -U postgres -d $dbname  -c "GRANT ALL PRIVILEGES ON DATABASE $dbname to $uname"
+psql -A -t  -U postgres -d $dbname  -c "ALTER TABLE geometry_columns OWNER TO   $uname"
+
+
+
+#NOTEWORTHY 
+#GRANT ALL ON goog_taxlots TO PUBLIC;
+
+#In postgres, unquoted column and table names are converted to lower case.
+#In general, the advice is to either never quote names or always quote them
+
+
+
+
+
+
+##################################################
+#GRANT SELECT,INSERT,UPDATE,DELETE on geometry_columns to detcogdb;
+#GRANT SELECT,INSERT,UPDATE,DELETE on geography_columns to detcogdb;
+
+#GRANT ALL PRIVILEGES ON DATABASE wapiti to detcogdb;
+#ALTER TABLE geometry_columns OWNER TO detcogdb;
+
+#GRANT SELECT,INSERT,UPDATE,DELETE on spatial_ref_sys to kat;
+#ALTER TABLE spatial_ref_sys OWNER TO dbguy;
+
+
+

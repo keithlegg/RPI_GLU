@@ -1,0 +1,29 @@
+#GPS RPI config
+#Keith Legg - Aug 13, 2013
+ 
+###############################
+#MACHINE SETUP
+
+CFG_MACID sunra #
+CFG_PORT com13 #/dev/tty0 #
+CFG_UART_ENABLE false #
+
+CFG_WORKDIR C:/keith/avr/rpi_api/py #
+
+###############################
+#WEB/DATABASE SETUP
+
+CFG_HTDOCS C:/keith #
+CFG_WEBMAP gpsview.html #
+CFG_PGDB_DBNAME robot #
+CFG_PGDB_TBNAME bot_test #
+CFG_PGDB_USER postgres #
+CFG_PGDB_PASSWD password #
+
+###############################
+
+
+###############################
+
+
+
